@@ -45,7 +45,7 @@ if __name__ == '__main__':
     solution1 = find(3, 1, coordinate_map)
     solution2 = find_trees(paths, coordinate_map)
     execution_time = datetime.now() - start
-
+    print("Day 3")
     print(f"Part 1 Solution: {solution1}")
     print(f"Part 2 Solution: {solution2}")
     print(f"Took: {execution_time.microseconds / 1000}ms")

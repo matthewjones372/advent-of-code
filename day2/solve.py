@@ -40,6 +40,7 @@ def validation_rule_2(entry: password_entry) -> bool:
 
 
 if __name__ == '__main__':
+    print("Day 2")
     password_entries = read_file()
-    print(check(password_entries, validation_rule_1))
-    print(check(password_entries, validation_rule_2))
+    print(f"Part 1: Solution = {check(password_entries, validation_rule_1)}")
+    print(f"Part 2: Solution = {check(password_entries, validation_rule_2)}")

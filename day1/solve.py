@@ -21,6 +21,11 @@ def find_using_set(number_list, target=2020):
             return wanted * number
 
 
+def find_using_backtracking(number_list, target=2020):
+    # TODO
+    pass
+
+
 if __name__ == '__main__':
     numbers = read_file()
     print(find_using_set(numbers))
