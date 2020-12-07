@@ -16,18 +16,22 @@ def read_file(filename: str = "bag_rules.txt"):
 
 
 def get_outer_bags(rule_dict, root_bag='shiny gold'):
-    collected_bags = defaultdict(int)
+    outer_bags = defaultdict(lambda: 1)
 
     def inner(root):
-        for count, bag in rule_dict[root]:
-            current_count = collected_bags[bag]
-            collected_bags[bag] = (current_count + count)
+        for bag_count, bag in rule_dict[root]:
+            outer_bags[bag] = outer_bags[bag] * bag_count
             inner(bag)
 
     inner(root_bag)
-    return len(collected_bags), sum(collected_bags.values())
+    return len(outer_bags), sum(outer_bags.values())
+
+
+def get_inner_bags(rules, root_bag='shiny gold'):
+    return sum([bag_count * (1 + get_inner_bags(rules, bag)) for bag_count, bag in rules[root_bag]])
 
 
 if __name__ == '__main__':
-    bags = read_file()
-    print(get_outer_bags(bags))
+    rules = read_file()
+    count = get_outer_bags(rules)
+    print(get_inner_bags(rules))
