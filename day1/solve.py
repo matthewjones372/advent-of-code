@@ -7,7 +7,7 @@ def read_file(filename="numbers.txt"):
         return [int(i) for i in f.read().splitlines()]
 
 
-def find(number_list, n, target=2020):
+def find_using_brute_force(number_list, n, target=2020):
     for combo in combinations(number_list, n):
         if sum(combo) == target:
             return reduce(lambda x, y: x * y, combo)
@@ -29,4 +29,4 @@ def find_using_backtracking(number_list, target=2020):
 if __name__ == '__main__':
     numbers = read_file()
     print(find_using_set(numbers))
-    print(find(numbers, 3))
+    print(find_using_brute_force(numbers, 3))
