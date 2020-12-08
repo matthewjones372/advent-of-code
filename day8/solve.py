@@ -6,18 +6,18 @@ GameInstructions = List[Tuple[str, int]]
 
 def read_file(filename: str = 'game_instructions.txt') -> GameInstructions:
     with open(filename) as f:
-        gameInstructions = []
+        game_instructions = []
         for instruction in f.read().splitlines():
             command, number = instruction.split()
-            gameInstructions.append((command, int(number)))
-        return gameInstructions
+            game_instructions.append((command, int(number)))
+        return game_instructions
 
 
-def run_game(gameInstructions: GameInstructions) -> (int, bool):
+def run_game(game_instructions: GameInstructions) -> (int, bool):
 
     accumulator = 0
     current_op_index = 0
-    last_op_index = len(gameInstructions)
+    last_op_index = len(game_instructions)
     visited_ops = set()
 
     while True:
@@ -28,7 +28,7 @@ def run_game(gameInstructions: GameInstructions) -> (int, bool):
             return accumulator, False
 
         visited_ops.add(current_op_index)
-        current_op, op = gameInstructions[current_op_index]
+        current_op, op = game_instructions[current_op_index]
 
         if current_op == 'nop':
             current_op_index += 1
@@ -41,9 +41,9 @@ def run_game(gameInstructions: GameInstructions) -> (int, bool):
             current_op_index += 1
 
 
-def find_broken_instruction(gameInstructions: GameInstructions) -> Optional[int]:
-    for i, (command, count) in enumerate(gameInstructions):
-        fixed_game = swap_op(command, count, gameInstructions, i)
+def find_broken_instruction(game_instructions: GameInstructions) -> Optional[int]:
+    for i, (command, count) in enumerate(game_instructions):
+        fixed_game = swap_op(command, count, game_instructions, i)
         acc, is_successful_run = run_game(fixed_game)
 
         if is_successful_run:
@@ -52,8 +52,8 @@ def find_broken_instruction(gameInstructions: GameInstructions) -> Optional[int]
         return None
 
 
-def swap_op(command, count, gameInstructions, index):
-    fixed_game = copy.deepcopy(gameInstructions)
+def swap_op(command, count, game_instructions, index):
+    fixed_game = copy.deepcopy(game_instructions)
     if command == 'jmp':
         fixed_game[index] = ('nop', count)
     if command == 'nop':

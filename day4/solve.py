@@ -1,4 +1,5 @@
 import re
+from typing import List
 
 required_fields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
 match_patterns = re.compile(fr"{'|'.join(required_fields)}")
@@ -12,12 +13,12 @@ hcl_re = re.compile(r'^#[\w]{6}$')
 passport_re = re.compile(r'^\d{9}')
 
 
-def read_file(filename: str = "passports.txt") -> [str]:
+def read_file(filename: str = "passports.txt") -> List[str]:
     with open(filename) as f:
         return [passport for passport in f.read().split("\n\n")]
 
 
-def passports_with_valid_field_number(passports_list: [str]) -> int:
+def passports_with_valid_field_number(passports_list: List[str]) -> int:
     return sum(map(has_required_fields, passports_list))
 
 
@@ -69,7 +70,7 @@ def has_valid_fields(passport_str: str) -> bool:
     return all(r() for r in rules)
 
 
-def passports_with_valid_fields(passports_list):
+def passports_with_valid_fields(passports_list: List[str]) -> int:
     return sum(map(has_valid_fields, passports_list)) - 1
 
 

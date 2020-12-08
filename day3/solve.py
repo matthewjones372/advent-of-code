@@ -1,13 +1,17 @@
 from functools import reduce
 from datetime import datetime
+from typing import Dict, List
 
 
-def read_file(filename: str = "coordinates.txt") -> [[chr]]:
+CoordinateMap = Dict[int, List[chr]]
+
+
+def read_file(filename: str = "coordinates.txt") -> CoordinateMap:
     with open(filename) as f:
-        return {line: coords for (line, coords) in enumerate(f.read().splitlines())}
+        return {line: coordinate for (line, coordinate) in enumerate(f.read().splitlines())}
 
 
-def find(right: int, down: int, coord_map: {int: [chr]}) -> int:
+def find(right: int, down: int, coord_map: CoordinateMap) -> int:
     def walk(current_down: int,
              current_right: int,
              tree_count: int) -> int:
@@ -25,8 +29,8 @@ def find(right: int, down: int, coord_map: {int: [chr]}) -> int:
     return walk(current_down=down, current_right=right, tree_count=0)
 
 
-def find_trees(paths: [(int, int)], coordinate_map: {int: [chr]}) -> int:
-    trees = map(lambda path: find(path[0], path[1], coordinate_map), paths)
+def find_trees(tree_paths: [(int, int)], coord_map: CoordinateMap) -> int:
+    trees = map(lambda path: find(path[0], path[1], coord_map), tree_paths)
     return reduce(lambda x, y: x * y, trees)
 
 

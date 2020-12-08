@@ -1,12 +1,12 @@
 from collections import Counter, namedtuple
-from typing import Callable
+from typing import Callable, List
 
 password_entry = namedtuple(
     "password_entry", ["min_count", "max_count", "char", "password_counter", "password_list"]
 )
 
 
-def read_file(filename: str = "passwords.txt") -> [str]:
+def read_file(filename: str = "passwords.txt") -> List[str]:
     with open(filename) as f:
         return f.read().splitlines()
 
@@ -22,7 +22,7 @@ def parse_entry(line: str) -> password_entry:
                           password_list=list(password))
 
 
-def check(entries: [password_entry],
+def check(entries: List[str],
           validation_rule: Callable[[password_entry], bool]) -> int:
     return sum([validation_rule(parse_entry(entry)) for entry in entries])
 
