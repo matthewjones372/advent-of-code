@@ -53,7 +53,7 @@ def find_broken_instruction(game_instructions: GameInstructions) -> Optional[int
 
 
 def swap_op(command, count, game_instructions, index):
-    fixed_game = copy.deepcopy(game_instructions)
+    fixed_game = copy.copy(game_instructions)
     if command == 'jmp':
         fixed_game[index] = ('nop', count)
     if command == 'nop':
