@@ -5,10 +5,10 @@ from typing import DefaultDict, Set, Tuple
 outer_bag_re = re.compile(r'(\w+ \w+) bags contain (.*)')
 bag_re = re.compile(r'(\d+) (\w+ \w+) bags?')
 
-RuleDict = DefaultDict[str, Set[Tuple[int, str]]]
+BagRules = DefaultDict[str, Set[Tuple[int, str]]]
 
 
-def read_file(filename: str = "bag_rules.txt") -> RuleDict:
+def read_file(filename: str = "bag_rules.txt") -> BagRules:
     with open(filename) as f:
         bag_dict = defaultdict(set)
         for rule in f.read().splitlines():
@@ -18,7 +18,7 @@ def read_file(filename: str = "bag_rules.txt") -> RuleDict:
         return bag_dict
 
 
-def get_outer_bags(rule_dict: RuleDict, root_bag: str = 'shiny gold') -> int:
+def get_outer_bags(rule_dict: BagRules, root_bag: str = 'shiny gold') -> int:
     outer_bags = {}
 
     def inner(root):
@@ -30,7 +30,7 @@ def get_outer_bags(rule_dict: RuleDict, root_bag: str = 'shiny gold') -> int:
     return len(outer_bags)
 
 
-def get_inner_bags(rule_dict: RuleDict, root_bag: str = 'shiny gold') -> int:
+def get_inner_bags(rule_dict: BagRules, root_bag: str = 'shiny gold') -> int:
     return sum([bag_count * (1 + get_inner_bags(rule_dict, bag)) for bag_count, bag in rule_dict[root_bag]])
 
 

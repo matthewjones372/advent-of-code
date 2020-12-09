@@ -1,6 +1,7 @@
 from collections import namedtuple
 from typing import Optional, Sequence, Set
 
+
 BoardingPass = namedtuple(
     "BoardingPass", ["seat_id", "seat_number", "row_number"]
 )
@@ -56,13 +57,13 @@ def get_highest_seat_id(boarding_passes: Set[BoardingPass]) -> int:
 def find_missing_seat_id(boarding_passes: Set[BoardingPass]) -> Optional[int]:
     seating_ids = set(map(lambda p: p.seat_id, boarding_passes))
     for seat_id in range(min(seating_ids), max(seating_ids)):
-        if is_missing(seat_id, seating_ids):
+        if is_missing_seat(seat_id, seating_ids):
             return seat_id
     else:
         return None
 
 
-def is_missing(seat_id: int, seating_ids: Set[int]) -> bool:
+def is_missing_seat(seat_id: int, seating_ids: Set[int]) -> bool:
     def not_before():
         return (seat_id - 1) in seating_ids
 
